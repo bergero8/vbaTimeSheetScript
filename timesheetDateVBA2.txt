@@ -1,0 +1,52 @@
+Timesheet date population macro VBA
+
+Sub datePopulation()
+
+Dim startDate As Date
+startDate = DateValue("Dec 29, 2015")
+DueDate = DateAdd("d", 7, startDate)
+
+Dim day As String
+day = Format(DueDate, "dd")
+
+Dim month As String
+month = Format(DueDate, "mm")
+
+Dim year As String
+year = Format(DueDate, "yyyy")
+
+Dim myReport As Workbook
+'Set myReport = Workbooks.Add
+Set myReport = ActiveWorkbook
+
+Dim path As String
+path = "\\psf\Home\Desktop\TimeSheet\"
+
+Dim endDate As Date
+endDate = DateValue("May 31, 2015")
+
+Do While DueDate < endDate
+
+myReport.SaveAs Filename:=path & month & "-" & day & "-" & year & ".xlsm", FileFormat:=xlOpenXMLWorkbookMacroEnabled, CreateBackup:=False
+
+DueDate = DateAdd("d", 7, DueDate)
+day = Format(DueDate, "dd")
+month = Format(DueDate, "mm")
+year = Format(DueDate, "yyyy")
+Range("C5") = DueDate
+Range("B12") = DateAdd("d", -5, DueDate)
+Range("B14") = DateAdd("d", -3, DueDate)
+Range("B16") = DateAdd("d", -1, DueDate)
+
+
+Range("C12") = "8:00am/1:00pm"
+Range("C14") = "8:00am/5:00pm"
+Range("C16") = "8:00am/5:00pm"
+Range("G12") = "5.00"
+Range("G14") = "9.00"
+Range("G16") = "9.00"
+
+Loop
+
+
+End Sub
